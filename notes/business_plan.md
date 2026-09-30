@@ -75,7 +75,7 @@
 
 ### ③ Claude Console
 - **何か**: APIを使うためのアカウント。お客さんのデータを扱う作業はここで行う
-- **手順**: `notes/claude_api_and_contracts.md` の「2. 導入と契約の手順」のとおり
+- **手順**: `notes/claude_api_and_contracts.md` の「3. 導入と契約の手順」のとおり。Console accountの仕組みは同じファイルの「2.」を参照
 - **費用**: 最初のクレジット10〜20ドル+消費税
 
 ### ④ 開業届
@@ -144,7 +144,7 @@
   3. PDFにして提案書に付ける
 
 ### ⑩ 契約書のひな形
-- **何か**: NDA(秘密保持契約)と業務委託契約のひな形。中身は `notes/claude_api_and_contracts.md` の「4.」を参照
+- **何か**: NDA(秘密保持契約)と業務委託契約のひな形。中身は `notes/claude_api_and_contracts.md` の「5.」を参照
 - **手順**:
   1. 経済産業省のひな形をもとに、Claudeと作る
   2. よろず支援拠点(国の無料経営相談所)で見てもらう

@@ -19,7 +19,8 @@ TikTokアフィリエイト(本業化を目指す)に関するメモを置く場
 - `notes/goals.md`: 目標(KGI 月20万円/KPI 11月末までの自動化)と、「最後は自分で押す」半自動の方針
 - `notes/a8_tiktok_rules.md`: A8.net公式「TikTokを使ったアフィリエイトガイド」のルール(リンク作成、PR表記、禁止業種、ハッシュタグ)
 - `notes/business_plan.md`: 中小企業向け「採用発信のAI代行」の事業計画(2026年11月開始。KGI・KPI、準備の手順、営業の進め方)
-- `notes/claude_api_and_contracts.md`: Claude APIの説明・導入手順・料金一覧と、商用規約・DPA・NDA・業務委託契約のまとめ
+- `notes/claude_api_and_contracts.md`: Claude APIの説明・Console accountの仕組み・導入手順・料金一覧と、商用規約・DPA・NDA・業務委託契約のまとめ
+- `word/`: 上の2つ(事業計画、APIと契約)のWord版。メモを直したら、`tools/md2docx.js` で作り直す(`npm install docx` のあと `node tools/md2docx.js <メモ.md> <出力.docx> <タイトル>`)
 
 ## スキル
 - `.claude/skills/crowdworks-apply/`: クラウドワークスの案件リンクや本文から、案件の整理・評価と応募文の作成を行う

@@ -29,7 +29,75 @@
 2. Consoleの画面(Workbench)でプロンプトを試す
 3. 自動化の仕組みを作る(例: お客さんの会社情報から求人票を10本まとめて作る、TikTokの台本を毎日作る)。プログラムはClaude Codeに書いてもらえる
 
-## 2. 導入と契約の手順
+## 2. Console accountとは
+
+### ひとことで
+- **Claude Console**([platform.claude.com](https://platform.claude.com))は、APIを使うための管理画面。以前は「Anthropic Console」(console.anthropic.com)と呼ばれていた
+- **Console account**は、その管理画面にログインするためのアカウント
+- claude.ai のアカウント(Free・Pro・Max)とは**別物**。同じメールアドレスで両方作れるが、中身も請求も完全に別
+  - Pro/Maxの料金を払っても、Consoleのクレジットは増えない
+  - Consoleにクレジットを入れても、Pro/Maxの利用量は増えない
+
+### claude.ai のアカウントとの違い
+| | claude.ai のアカウント | Console account |
+|---|---|---|
+| 入口 | claude.ai、スマホ・パソコンのアプリ | platform.claude.com |
+| できること | Claudeとのチャット、サブスクでのClaude Code | APIキーの発行、請求の管理、利用状況の確認、Workbenchでのお試し、従量課金でのClaude Code |
+| 料金 | 月額(Free/Pro/Max/Team) | 前払いのクレジットから、使った分だけ引かれる |
+| 規約 | 個人向け(Team・Enterpriseは商用) | 商用規約 |
+| 学習に使われるか | 設定しだい | 使われない |
+
+### 中の仕組み(組織・ワークスペース・役割)
+- **アカウント**: あなた個人のログイン(メールアドレス+2段階認証)
+- **組織(Organization)**: 請求と契約の単位。登録すると自動で作られ、あなたが管理者(Admin)になる。組織名は屋号でよい
+- **ワークスペース(Workspace)**: 組織の中の仕切り。APIキー・上限金額・利用量を、ワークスペースごとに分けて管理できる(最大100個)
+  - **Default Workspace**: 最初からある。名前の変更や削除はできず、個別の上限も設定できない
+  - **Claude Code workspace**: Claude CodeにConsoleでログインすると自動で作られる。Claude Codeの利用はここに集計され、上限も別に設定できる
+  - **使い方の例**: 自作の仕組み(APIキー)を使うようになったら、「TikTok自動化用」「A社用」のように分ける。何にいくら使ったかが分かり、お客さんごとの原価計算にも使える
+- **役割**: 今は自分1人(Admin)でよい。将来人を入れるときは、役割を選んで招待する
+  - User: Workbenchだけ使える
+  - Claude Code: Claude Code用のキーだけ作れる
+  - Developer: APIキーを作れる
+  - Billing: 請求を管理できる
+  - Admin: すべて管理できる
+
+### 画面の主なメニュー
+| メニュー | できること |
+|---|---|
+| Workbench | ブラウザでプロンプトを試す(使った分は課金される) |
+| Usage / Cost | 日ごと・モデルごと・ワークスペースごとの利用量と金額を見る |
+| Settings > API keys | APIキーの作成・無効化 |
+| Settings > Billing | カード登録、クレジット購入、自動チャージ、月の上限、請求書(インボイス) |
+| Settings > Limits | 今の利用段階と上限を見る |
+| Settings > Workspaces | ワークスペースの作成と、ワークスペースごとの上限設定 |
+| Settings > Members | メンバーの招待と役割の設定 |
+| Settings > Privacy | データの扱いに関する設定 |
+
+### お金の流れ
+- **前払い**: Billingでクレジットを買う → 使うたびに残高から引かれる → 残高が0になると止まる(自動チャージがOFFの場合)
+- **失効と返金**: クレジットは購入から1年で失効し、返金はできない
+- **月の上限**: Spend limitsで決める。上限に達すると、その月は止まる
+- **請求書**: 消費税10%込み。インボイスは Invoice history から取れるので、会計ソフトに経費として登録する
+- **利用段階**: 新しい組織は低めの上限から始まり、使ううちに自動で上がる。段階ごとに月の上限額がある(Start 500ドル、Build 1,000ドル、Scale 20万ドル)
+
+### Claude Codeで使うときの注意
+- `/login` で「Anthropic Console account」を選ぶと、使った分がConsoleの残高から引かれる(サブスクの利用量は使わない)
+- ログインの方法は2つある
+  - 「Sign in with your Console account (recommended)」: APIキーを作らずにログインする
+  - 「Create an API key (legacy)」: APIキーを作って、パソコンに保存する
+- Consoleでログインすると、そのパソコンに保存されているclaude.aiのログインは解除される。サブスクと両方使うなら、設定フォルダを分ける(3.の手順6)
+- 今どちらでログインしているかは `/status` で確認できる
+- claude.ai のクラウドで動くClaude Codeでは使えない(常にサブスクで動く)
+
+### この事業での設定例
+1. 組織名: 屋号
+2. ワークスペース: 最初は自動で作られる「Claude Code」だけで足りる。自作の仕組みを使い始めたら、用途ごと・お客さんごとに作る
+3. 上限: 組織全体で月30ドル、Claude Code workspaceで月20ドル
+4. 自動チャージ: OFF
+5. 2段階認証: ON
+6. 毎月末にUsage/Costを見て、KPIの経費欄に記録する
+
+## 3. 導入と契約の手順
 1. [platform.claude.com](https://platform.claude.com) を開き、Googleアカウントかメールでアカウントを作る
 2. 組織名を入れる(屋号でよい)
 3. 2段階認証をONにする
@@ -46,7 +114,7 @@
 - **契約**: Console登録時に商用規約(Commercial Terms)に同意した時点で成立する。DPA(データ処理契約)も自動で含まれる。紙の契約や審査はない
 - 新しい組織は利用上限が低めの段階から始まり、使っていくと自動で上がる
 
-## 3. 料金一覧(2026年9月時点、税抜、1ドル=150円で計算)
+## 4. 料金一覧(2026年9月時点、税抜、1ドル=150円で計算)
 100万トークンあたりの料金:
 
 | モデル | 入力 | 出力 | キャッシュ読み込み | バッチ(入力/出力) | 向いている仕事 |
@@ -80,13 +148,15 @@ Claude Codeでファイルを読みながら作業すると量が増え、1時�
 | Max | 100ドル / 200ドル |
 | Team(2〜150人) | 1人25ドル(年払いなら20ドル)、Premium席は125ドル |
 
-## 4. 秘密保持・データ処理などの契約
+## 5. 秘密保持・データ処理などの契約
 
 ### 誰と何を結ぶか
 ```
-Anthropic ──(①商用規約 ②DPA)── あなた(個人事業主) ──(③NDA ④業務委託契約 ⑤個人情報の覚書※)── お客さんの会社
-                                      ├──(⑥NDA※)── 将来の外注先
-                                      └──(クラウドワークスの利用規約)── クラウドワークス経由のお客さん
+あなた(個人事業主)
+ ├─ Anthropic ………………… ①商用規約 ②DPA
+ ├─ お客さんの会社 ……… ③NDA ④業務委託契約 ⑤個人情報の覚書※
+ ├─ 将来の外注先 ………… ⑥NDA※
+ └─ クラウドワークス経由のお客さん … クラウドワークスの利用規約
 ※必要になったときだけ
 ```
 
@@ -136,6 +206,8 @@ Anthropic ──(①商用規約 ②DPA)── あなた(個人事業主) ──
 ## 出典
 - [Pricing - Claude Platform Docs](https://platform.claude.com/docs/en/about-claude/pricing)
 - [Rate limits - Claude Platform Docs](https://platform.claude.com/docs/en/api/rate-limits)
+- [Workspaces - Claude Platform Docs](https://platform.claude.com/docs/en/manage-claude/workspaces)
+- [Can I have a Claude account and a Console account?](https://support.claude.com/en/articles/8987223-can-i-have-a-claude-account-and-a-console-account)
 - [Authentication - Claude Code Docs](https://code.claude.com/docs/en/authentication)
 - [Data usage - Claude Code Docs](https://code.claude.com/docs/en/data-usage)
 - [How do I pay for my Claude API usage?](https://support.claude.com/en/articles/8977456-how-do-i-pay-for-my-claude-api-usage)
